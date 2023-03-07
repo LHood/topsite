@@ -1,16 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <title>Food Images</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #canvas-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+      }
+      canvas {
+        border: 2px solid black;
+        max-width: 1920px;
+        max-height: 1080px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="canvas-container">
+      <canvas id="image-canvas"></canvas>
+    </div>
 
+    <script>
+      // Function to scroll images
+      function scrollImages() {
+        const canvas = document.getElementById("image-canvas");
+        const ctx = canvas.getContext("2d");
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        ctx.putImageData(imageData, -1, 0);
+        const newImage = new Image();
+        newImage.onload = function () {
+          ctx.drawImage(newImage, canvas.width - newImage.width, 0);
+        };
+        // Replace image sources with your own image URLs
+        const imageSources = [
+          "https://via.placeholder.com/500x500?text=Food%20Item%201",
+          "https://via.placeholder.com/500x500?text=Food%20Item%202",
+          "https://via.placeholder.com/500x500?text=Food%20Item%203",
+        ];
+        const randomIndex = Math.floor(Math.random() * imageSources.length);
+        newImage.src = imageSources[randomIndex];
+      }
 
-<h2>My first webpage</h2>
- 
- <p style="font-family:verdana">This is a soft introduction to html code and web design</p>
- <p>Please use this code to help you begin to edit your pages</p>
-<p>The alt attribute should reflect the image content, so users who cannot see the image gets an understanding of what the image contains:</p>
-<img src="images/p3.jpg">
-<img src="template.jpg">
-<img src="Cool.png">
-
-</body>
+      // Call scrollImages function if there are at least 3 images
+      const imageSources = [
+        "https://via.placeholder.com/500x500?text=Food%20Item%201",
+        "https://via.placeholder.com/500x500?text=Food%20Item%202",
+        "https://via.placeholder.com/500x500?text=Food%20Item%203",
+      ];
+      if (imageSources.length >= 3) {
+        setInterval(scrollImages, 5000); // Scroll every 5 seconds
+      }
+    </script>
+  </body>
 </html>
+
